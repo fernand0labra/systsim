@@ -1,0 +1,29 @@
+- name: Set app_user HOME fact
+  # Set up environment variable app_home
+  set_fact:
+    app_home: "{{ lookup('env', 'HOME') }}"
+  # Activate privilege escalation
+  become: true
+  become_user: "{{ app_user }}"
+- name: Clone application to app directory
+  git:
+    repo: "http://172.30.103.52:80/ferlab-1/systsim.git"
+    dest: "{{ app_home }}/{{ app_name }}"
+    force: yes
+    update: no
+  become: true
+  become_user: "{{ app_user }}"
+- name: Install node packages
+  # Execute shell commands on targets
+  shell:
+    # Change directory (built-in option)
+    chdir: "{{ app_home }}/{{ app_name }}"
+    # Execute a command
+    cmd: npm install ; sudo npm install -g concurrently; npm install normal-distribution ; npm install express-openapi; npm install axios; npm install jshashes;
+  become: true
+  become_user: "{{ app_user }}"
+- name: Install server in systemd
+  template: src=../../../systsim.service dest=/etc/systemd/system/systsim.service
+  # Invoke service 'Start app'
+  notify:
+    - Start app

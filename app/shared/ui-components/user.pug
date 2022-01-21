@@ -1,0 +1,99 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel="shortcut icon" href="/favicon.ico" type="image/x-icon")
+    link(rel="icon" href="/favicon.ico" type="image/x-icon")
+    script(src='/javascripts/user.js')
+    script(src='http://cdn.rawgit.com/h2non/jsHashes/master/hashes.js')
+
+  body(onload='updateUser();')
+    block content
+      h1= title
+      hr
+      section(style='margin-bottom:20px')
+        div
+          table(cellpadding="0" cellspacing="0" border="0")
+              tr
+                th(class="tbl-header") Electricity Price
+                td(class="tbl-content")= cep
+              tr 
+                th(class="tbl-header") Current Consumption
+                td(class="tbl-content")= consumption
+      section(style='margin-bottom:0px')
+        div
+          table(cellpadding="0" cellspacing="0" border="0")
+              tr
+                th(class="tbl-header") Wind Speed
+                td(class="tbl-content")= speed
+              tr
+                th(class="tbl-header") Net production
+                td(class="tbl-content")= net
+              if memberType!='Consumer'
+                tr
+                  th(class="tbl-header") Buffer Size 
+                  td(class="tbl-content")= bufferSize
+                tr
+                  th(class="tbl-header") Current Production
+                  td(class="tbl-content")= production
+                tr(onclick='askUnder()')
+                  th(style='background-color: rgb(255, 228, 196, 0.5);' class="tbl-header") Ratio of Under-Production
+                  td(class="tbl-content")= underRatio
+                tr(onclick='askExcessive()')
+                  th(style='background-color: rgb(255, 228, 196, 0.5);' class="tbl-header") Ratio of Excessive-Production
+                  td(class="tbl-content")= excessiveRatio
+
+      p(style='display:none;' id='_id')= _id
+      p(style='display:none;' id='_fullName')= fullName 
+      p(style='display:none;' id='_memberType')= memberType
+      p(style='display:none;' id='_fullAddress')= fullAddress 
+
+      // ROUTING TO THE MAIN PAGE
+      form(action='/logout' method='POST' id='logout')
+        input(style='display:none;' type="text"  name="_id" placeholder='_id')
+        input(id='return' type='submit' value='LOGOUT')
+
+      // UPDATE THE USER'S PAGE
+      form(style='display:none;' action='/user' method='POST' id='getUser')
+        label(style='display:none;' id='_port')= port
+        input(style='display:none;' type="text"  name="_id" placeholder='_id')
+        input(style='display:none;' type='text' name='fullName' placeholder='fullName')
+        input(style='display:none;' type='text' name='memberType' placeholder='memberType')
+        input(style='display:none;' type='text' name='fullAddress' placeholder='fullAddress')
+        input(style='display:none;' type='text' name='port' placeholder='port')
+
+        label(style='display:none;' id='updating')= updating
+        input(style='display:none;' type='text' name='updating' placeholder='updating')
+
+        label(style='display:none;' id='newUnder')= newUnder
+        input(style='display:none;' type="text"  name="newUnder" placeholder='newUnder')
+
+        label(style='display:none;' id='newExcessive')= newExcessive
+        input(style='display:none;' type="text"  name="newExcessive" placeholder='newExcessive')
+
+        input(style='display:none;' type='submit')
+
+      // CHANGE UNDER-PRODUCTION RATIO
+      form(style='display:none;' action='/user/under' method='POST' id='updateUnder')
+        input(style='display:none;' type="text"  name="_id" placeholder='_id')
+        input(style='display:none;' type="text"  name="newUnder" placeholder='newUnder')
+
+        input(style='display:none;' type='text' name='fullName' placeholder='fullName')
+        input(style='display:none;' type='text' name='memberType' placeholder='memberType')
+        input(style='display:none;' type='text' name='fullAddress' placeholder='fullAddress')
+        input(style='display:none;' type='text' name='port' placeholder='port')
+
+        input(style='display:none;' type='submit')
+
+      // CHANGE EXCESSIVE-PRODUCTION RATIO
+      form(style='display:none;' action='/user/excessive' method='POST' id='updateExcessive')
+        input(style='display:none;' type="text"  name="_id" placeholder='_id')
+        input(style='display:none;' type="text"  name="newExcessive" placeholder='newExcessive')
+
+        input(style='display:none;' type='text' name='fullName' placeholder='fullName')
+        input(style='display:none;' type='text' name='memberType' placeholder='memberType')
+        input(style='display:none;' type='text' name='fullAddress' placeholder='fullAddress')
+        input(style='display:none;' type='text' name='port' placeholder='port')
+
+        input(style='display:none;' type='submit')

@@ -1,0 +1,43 @@
+extends layout
+
+block content
+  h1= title
+  hr
+  p(style='font-style: italic; text-align: center; margin-left: auto; margin-right: auto;')= error
+  section
+    h2 Register with your information:
+
+    // ROUTING TO THE USER'S SPECIFIC PAGE
+    form(action="/register" method="POST" id='registerForm' onsubmit='register(event)')
+      div.form-group
+        label(for='first_name') First Name:
+        br
+        input(class='tab' type="text" name="first_name" placeholder="first_name" required)
+      div.form-group
+        label(for='last_name') Last Name: 
+        br
+        input(class='tab' type="text" name="last_name" placeholder="last_name" required)
+      div.form-group
+        label(for='email') E-mail:   
+        br
+        input(class='tab' type="text" name="email" placeholder="email" required)
+      hr
+      div.form-group
+        label(for='username') Username:
+        br
+        input(class='tab' type="text" name="username" placeholder="username" required)
+      div.form-group
+        label(for='password') Password:
+        br
+        input(class='tab' type="password" name="password" placeholder="password" required)
+        input(style='display:none' type='password' name='hash' placeholder='hash')
+      hr
+      div.form-group
+        label(for='address') Identifier:
+        br
+        input(class='tab' type="text" name="identifier" placeholder="identifier" required)
+      button(class='submit') REGISTER
+
+  // ROUTING TO THE MAIN'S PAGE
+  form(action='/' method='GET')
+    input(id='return' type='submit' value='HOME')

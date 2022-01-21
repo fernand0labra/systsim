@@ -1,0 +1,10 @@
+- name: Install MongoDB package signing key
+  shell: curl -sSL https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
+- name: Install MongoDB repository
+  shell:
+    cmd: echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
+    creates: /etc/apt/sources.list.d/mongodb-org-4.4.list
+- name: Install MongoDB
+  apt: name=mongodb-org update_cache=true
+  notify:
+    - Restart MongoDB

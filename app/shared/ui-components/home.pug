@@ -1,0 +1,25 @@
+extends layout
+
+block content
+  h1= title
+  hr
+  section
+    div
+      h2 Platform for monitoring real-time your household's consumption: 
+      ul 
+        li Obtain the market's electricity price at all times.
+        li Get information about the weather's condition.
+        li Regulate your consumption by producing your own energy!
+      hr
+    table 
+      tr 
+        td
+          // ROUTING TO LOGIN PAGE
+          form(action='/login' method='GET')
+            input(style='width: 50%; margin-top: 25px; margin-left:40%' id='return' type='submit' value='LOGIN')
+        td 
+          // ROUTING TO REGISTER PAGE
+          form(action='/register' method='GET')
+            input(style='width: 50%; margin-top: 25px;' type='submit' value='REGISTER')        
+
+  

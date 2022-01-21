@@ -1,0 +1,81 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel="shortcut icon" href="/favicon.ico" type="image/x-icon")
+    link(rel="icon" href="/favicon.ico" type="image/x-icon")
+    script(src='/javascripts/manager.js')
+    script(src='http://cdn.rawgit.com/h2non/jsHashes/master/hashes.js')
+      
+  body(onload='updateManager()')
+    block content
+      h1= title
+      hr
+      section(style='margin-bottom:30px')
+        div
+          table(cellpadding="0" cellspacing="0" border="0")
+              tr
+                th(class="tbl-header") Status
+                td(class="tbl-content")= status
+              tr
+                th(class="tbl-header") Consumption
+                td(class="tbl-content")= consumption
+              tr
+                th(class="tbl-header") Production
+                td(class="tbl-content")= production
+
+      section(style='margin-bottom:10px')
+        div
+          table(cellpadding="0" cellspacing="0" border="0")
+              tr
+                th(class="tbl-header") Market Demand
+                td(class="tbl-content")= demand
+              tr 
+                th(class="tbl-header") Modeled Electricity Price
+                td(class="tbl-content")= mep
+              tr(onclick='askPrice()')
+                th(style='background-color: rgb(255, 228, 196, 0.5);' class="tbl-header") Current Electricity Price
+                td(class="tbl-content")= cep
+              tr(onclick='askRatio()')
+                  th(style='background-color: rgb(255, 228, 196, 0.5);' class="tbl-header") Ratio of Market/Buffer
+                  td(class="tbl-content")= electricityRatio
+
+      p(style='display:none;' id='_id')= _id
+
+      // ROUTING TO USER ACCOUNTS' PAGE
+      form(style='margin-left:22%' action='/manager/accounts' class="app-button" method='POST')
+        input(style='display:none;' type="text"  name="_id" placeholder='_id')
+        input(type="submit"  value="SHOW ACCOUNTS")
+
+      // ROUTING TO MAIN PAGE
+      form(action='/logout' class="app-button" method='POST' id='logout')
+        input(style='display:none;' type="text"  name="_id" placeholder='_id')
+        input(type="submit" value="LOGOUT")
+
+      // UPDATING MANAGER'S PAGE
+      form(style='display:none;' action='/manager' method='POST' id='getManager')
+        input(style='display:none;' type="text"  name="_id" placeholder='_id')
+
+        label(style='display:none;' id='updating')= updating
+        input(style='display:none;' type='text' name='updating' placeholder='updating')
+
+        label(style='display:none;' id='newRatio')= newRatio
+        input(style='display:none;' type="text"  name="newRatio" placeholder='newRatio')
+
+        label(style='display:none;' id='newPrice')= newPrice
+        input(style='display:none;' type="text"  name="newPrice" placeholder='newPrice')
+
+        input(style='display:none;' type='submit')
+
+      // CHANGING RATIO
+      form(style='display:none;' action='/manager/ratio' method='POST' id='updateRatio')
+        input(style='display:none;' type="text"  name="_id" placeholder='_id')
+        input(style='display:none;' type="text"  name="newRatio" placeholder='newRatio')
+        input(style='display:none;' type='submit')
+
+      // CHANGING PRICE
+      form(style='display:none;' action='/manager/price' method='POST' id='updatePrice')
+        input(style='display:none;' type="text"  name="_id" placeholder='_id')
+        input(style='display:none;' type="text"  name="newPrice" placeholder='newPrice')
+        input(style='display:none;' type='submit')

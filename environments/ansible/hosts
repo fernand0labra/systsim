@@ -1,0 +1,2 @@
+[systsim_host]
+localhost ansible_user=ferlab-1

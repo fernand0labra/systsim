@@ -1,0 +1,21 @@
+# Define metadata
+[Unit] 
+Description=systsim-server
+# Start network.target before creating the service
+After=network.target 
+StartLimitIntervalSec=0
+
+ # Define configuration
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User={{ app_user }}
+WorkingDirectory=/{{ app_home }}/{{ app_name }}
+# Path and Arguments of the command to execute to start the process
+ExecStart=/usr/bin/npm start
+
+# Define behavior
+[Install]
+# Multi-user access
+WantedBy=multi-user.target

@@ -1,0 +1,10 @@
+const apiDoc = {
+    swagger: '2.0',
+    info: {
+      title: 'Market API',
+      version: '1.0.0'
+    },
+    paths: {}
+  };
+  
+module.exports = apiDoc;

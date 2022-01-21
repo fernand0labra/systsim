@@ -1,0 +1,72 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    script(src='/javascripts/accounts.js')
+    script(src='http://cdn.rawgit.com/h2non/jsHashes/master/hashes.js')
+
+  body
+    block content
+      h1= title
+      hr
+
+      // CREATION OF USER
+      form(action='/manager/accounts/create' method='POST' id='createUser' style='margin-bottom: -15px; margin-top: 20px;' onsubmit='createUser(event)')
+        input(style='display:none;' type='text' name='memberType' placeholder='memberType')
+        input(style='display:none;' type='text' name='_manager' placeholder='_manager')           
+        input(style='width:100%; font-size: 16px;' type='submit' value='ADD MEMBERS')
+
+      if userSize == 0
+        h2 NO MEMBERS IN THE SYSTEM
+      else 
+        - var index = 0;
+        while index < userSize
+          div(class='manager' style='margin-bottom: 5px;')
+            table(cellpadding="0" cellspacing="0" border="0")
+              if users[index].registered
+                br
+                h3= users[index].fullName
+                tr
+                  th(class="tbl-header")= 'Username'
+                  td(class="tbl-content")= users[index].username
+              else 
+                br
+                h3 NOT REGISTERED
+              tr
+                th(class="tbl-header")= 'User ID'
+                td(class="tbl-content")= users[index]._id
+              tr
+                th(class="tbl-header")= 'Address'
+                td(class="tbl-content")= users[index].fullAddress
+              tr
+                th(class="tbl-header")= 'Member Type'
+                td(class="tbl-content")= users[index].memberType
+
+            // ROUTING TO USER'S PAGE FOR THE MANAGER
+            form(style='margin-left:22%; margin-bottom:10px;' action='/manager/accounts/update' id='getUpdate'+users[index]._id class="app-button" method='POST' onsubmit='toUser(event)')
+              input(style='display:none;' type='text' name='registered' placeholder='registered')
+              input(style='display:none;' type='text' name='fullName' placeholder='fullName')
+              input(style='display:none;' type='text' name='username' placeholder='username')
+              input(style='display:none;' type='text' name='_id' placeholder='_id')
+              input(style='display:none;' type='text' name='fullAddress' placeholder='fullAddress')
+              input(style='display:none;' type='text' name='memberType' placeholder='memberType')
+              input(style='display:none;' type='text' name='_manager' placeholder='_manager')            
+              
+              input(type="submit"  value="MORE")
+
+            // DELETION OF USER
+            form(style='margin-bottom:10px;' action='/manager/accounts/delete' class="app-button" id='deleteUser'+users[index]._id method='POST' onsubmit='deleteUser(event)')
+              input(style='display:none;' type='text' name='memberType' placeholder='memberType')
+              input(style='display:none;' type='text' name='port' placeholder='port')
+              input(style='display:none;' type='text' name='_id' placeholder='_id')
+              input(style='display:none;' type='text' name='_manager' placeholder='_manager')
+              input(type="submit" value="DELETE")
+            - index++
+
+      // ROUTING TO MANAGER'S MAIN PAGE
+      form(action='/manager' method='POST' id='backManager' onsubmit='toManager(event)')
+        label(style='display:none;' id='_id')=_id
+        label(style='display:none;' id='userSize')= userSize
+        input(style='display:none;' type='text' name='_id' placeholder='_id')
+        input(id='return' type='submit' value='BACK')

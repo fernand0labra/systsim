@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  h1= title
+  hr
+  p(style='font-style: italic; text-align: center; margin-left: auto; margin-right: auto;')= error
+  section
+    h2 Login with your information:
+    
+    // ROUTING TO THE USER'S SPECIFIC PAGE
+    form(action="/login" method="POST" id='loginForm' onsubmit='login(event)')
+      div.form-group
+        label(for='username') Username:
+        br
+        input(class='tab' type="text" name="username" placeholder="username" required)
+      div.form-group
+        label(for='password') Password: 
+        br
+        input(class='tab' type="password" name="password" placeholder="password" required)
+        input(style='display:none' type='password' name='hash' placeholder='hash')
+      br
+      button(class='submit') LOGIN
+  
+  // ROUTING TO THE MAIN'S PAGE
+  form(action='/' method='GET')
+    input(id='return' type='submit' value='HOME')

@@ -1,0 +1,40 @@
+{
+  "name": "m7011e",
+  "version": "0.0.1",
+  "private": true,
+  "config": {
+    "ip": "172.30.103.53"
+  },
+  "scripts": {
+    "start": "concurrently --kill-others \"node ./app/core/services/simulator\" \"node ./app/core/services/backend\""
+  },
+  "dependencies": {
+    "axios": "^0.24.0",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "~1.4.4",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "debug": "~2.6.9",
+    "expand-swagger-refs": "^2.0.1",
+    "express": "~4.16.1",
+    "express-http-proxy": "^1.6.3",
+    "express-openapi": "^10.1.0",
+    "express-openapi-validator": "^4.13.5",
+    "express-session": "^1.17.1",
+    "fs": "0.0.1-security",
+    "http-errors": "~1.6.3",
+    "https": "^1.0.0",
+    "jshashes": "^1.0.8",
+    "mongoose": "^5.10.14",
+    "morgan": "~1.9.1",
+    "node-fetch": "^2.0.0",
+    "normal-distribution": "^1.1.1",
+    "openapi-schema-validator": "^10.0.0",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^6.0.1",
+    "pug": "2.0.0-beta11",
+    "swagger-jsdoc": "^6.1.0",
+    "swagger-ui-express": "^4.3.0"
+  }
+}

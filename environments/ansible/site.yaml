@@ -1,0 +1,7 @@
+- hosts: systsim_host
+  connection: local
+  become: yes
+  roles:
+    - mongodb
+    - nodejs
+    - app

@@ -1,0 +1,21 @@
+ node { 
+    checkout scm
+    stage('Checkout') {
+        sh """
+        git config remote.origin.fetch '+refs/heads/*:refs/remotes/origin/*'
+        git fetch --all
+        """
+    }
+    stage('Build') { 
+        // Execute ansible-playbook site.yaml
+        sh 'ansible-playbook -i ./environments/ansible/hosts ./environments/ansible/site.yaml' 
+    }
+    stage('Test') {
+        sh 'echo SUCCESSFUL'
+    }
+    if (currentBuild.currentResult == 'SUCCESS') {
+        stage('Deploy') {
+            sh 'sudo systemctl restart systsim.service'
+        }
+    }
+}

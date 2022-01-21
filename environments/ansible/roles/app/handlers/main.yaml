@@ -1,0 +1,6 @@
+- name: Start app
+  systemd:
+    name: systsim
+    daemon_reload: yes
+    enabled: yes
+    state: restarted

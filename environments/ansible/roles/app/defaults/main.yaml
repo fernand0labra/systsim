@@ -1,0 +1,4 @@
+# Variables used during the execution of the task
+app_user: "{{ ansible_user }}"
+app_name: "systsim"
+app_reponame: "{{ app_name }}.git"
